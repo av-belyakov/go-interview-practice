@@ -96,13 +96,3 @@ func FindInsertPosition(arr []int, target int) int {
     
     return left
 }
-
-func searchInSlice[T comparable](elem T, l []T) int {
-	for k, v := range l {
-		if elem == v {
-            return k
-		}
-	}
-
-    return -1
-}
