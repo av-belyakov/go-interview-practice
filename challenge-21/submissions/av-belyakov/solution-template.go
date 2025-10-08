@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"slices"
-	"math"
 )
 
 func main() {
@@ -28,42 +27,20 @@ func main() {
 // BinarySearch performs a standard binary search to find the target in the sorted array.
 // Returns the index of the target if found, or -1 if not found.
 func BinarySearch(arr []int, target int) int {
-	count := len(arr)
-	if count == 0 {
-		return -1
-	}
-
-	if count == 1 {
-		if arr[0] == target {
-			return 0
-		} else {
-			return -1
-		}
-	}
-
-	slices.Sort(arr)
-
-	num := int(math.Ceil(float64(count) / 2))
-	arrOne := arr[:num]
-	arrTwo := arr[num:]
-
-    //fmt.Println("arr:", arr)
-    //fmt.Println("arrOne:", arrOne)
-    //fmt.Println("arrTwo:", arrTwo)
-
-	if arrOne[0] <= target && arrOne[len(arrOne)-1] >= target {
-		return searchInSlice(target, arrOne)
-	}
-
-	if arrTwo[0] <= target && arrTwo[len(arrTwo)-1] >= target {
-	    index := searchInSlice(target, arrTwo)
-	    if index == -1 {
-	        return index
-	    }
-	    
-	    return len(arrOne) + index
-	}
-
+    slices.Sort(arr)
+    left, right := 0, len(arr)
+    
+    for left < right {
+        mid := left + (right-left)/2
+        if arr[mid] == target {
+          return mid
+        } else if arr[mid] < target {
+            left = mid + 1
+        } else {
+            right = mid
+        }
+    }
+    
 	return -1
 }
 
